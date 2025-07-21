@@ -1,23 +1,22 @@
-// main.cpp
 #include <iostream>
 #include "header.h"
 using namespace std;
 
+int ackermann(int m, int n) {
+    if (m < 0 || n < 0)
+        throw "m or n < 0";
+    else if (m == 0)
+        return n + 1;
+    else if (n == 0)
+        return ackermann(m - 1, 1);
+    return ackermann(m - 1, ackermann(m, n - 1));
+}
+
 int main() {
-    int m, n;
-    cout << "請輸入 Ackermann 函數參數 m 與 n：";
-    cin >> m >> n;
-
     try {
-        cout << "\n[遞迴版本] Ackermann(" << m << ", " << n << ") = "
-             << ackermann_recursive(m, n) << endl;
-
-        cout << "[非遞迴版本] Ackermann(" << m << ", " << n << ") = "
-             << ackermann_nonrecursive(m, n) << endl;
-
-    } catch (...) {
-        cout << "發生例外錯誤（如堆疊溢位或無窮迴圈）" << endl;
+        int result = ackermann(2, 3);
+        cout << result << '\n';
+    } catch (const char* msg) {
+        cerr << "Error: " << msg << '\n';
     }
-
-    return 0;
 }
